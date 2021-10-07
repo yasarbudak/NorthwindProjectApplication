@@ -21,6 +21,7 @@ namespace DataAccess.Concrete.InMemory
         new Product { ProductId=5,  CategoryId=2,  ProductName="Fare", UnitPrice=85, UnitInStock=1 }
       };
     }
+
     public void Add(Product product) => _products.Add(product);
 
     public void Delete(Product product)
