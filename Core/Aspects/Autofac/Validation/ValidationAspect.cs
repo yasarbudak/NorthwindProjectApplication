@@ -3,18 +3,16 @@ using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Interceptors;
 using FluentValidation;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Aspects.Autofac.Validation
 {
-  public class ValidationAspect : MethodInterceptor
+  public class ValidationAspect : MethodInterception
   {
     private Type _validatorType;
     public ValidationAspect(Type validatorType)
     {
+      //defensive coding
       if (!typeof(IValidator).IsAssignableFrom(validatorType))
       {
         throw new System.Exception("This is not a validation class.");

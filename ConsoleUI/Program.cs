@@ -1,4 +1,6 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.CCS;
+using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using System;
@@ -12,33 +14,14 @@ namespace ConsoleUI
   {
     static void Main(string[] args)
     {
-      //ProductTest();
-      //CategoryTest();
-      GetProductDetails();
-    }
-
-    private static void GetProductDetails()
-    {
-      ProductManager productManager = new ProductManager(new EFProductDal());
-      var result = productManager.GetProductDetails();
-      if (result.Success)
-      {
-        foreach (var item in productManager.GetProductDetails().Data)
-        {
-          Console.WriteLine($"{item.ProductName} / {item.CategoryName}");
-        }
-      }
-      else
-      {
-        Console.WriteLine(result.Message);
-      }
-      Console.Read();
+      ProductTest();
+      CategoryTest();
     }
 
     private static void CategoryTest()
     {
       CategoryManager categoryManager = new CategoryManager(new EFCategoryDal());
-      foreach (var category in categoryManager.GetAll())
+      foreach (var category in categoryManager.GetAll().Data)
       {
         Console.WriteLine($"{category.CategoryName}");
       }
@@ -46,7 +29,7 @@ namespace ConsoleUI
 
     private static void ProductTest()
     {
-      ProductManager productManager = new ProductManager(new EFProductDal());
+      ProductManager productManager = new ProductManager(new EFProductDal(), new CategoryManager(new EFCategoryDal()));
       foreach (var item in productManager.GetAll().Data)
       {
         Console.WriteLine($"{item.ProductName}");
